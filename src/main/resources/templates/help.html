@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>URL Shortener Help</title>
+    <style>
+        table { border-collapse: collapse; }
+        table, th, td { border: 1px solid black; }
+    </style>
+</head>
+<body>
+<h1>URL Shortener</h1>
+<h2>Build Instructions:</h2>
+<h3>Pre-installation Requirements:</h3>
+<ul>
+    <li>Java JDK 8 and above</li>
+    <li>Maven 4.0.0</li>
+</ul>
+<h3>Setup:</h3>
+<ul>
+    <li>Unzip the source code into a directory e.g. <strong><em>URL-Shortener</em></strong></li>
+    <li>In command prompt, change into source code directory. e.g <strong><em>cd&nbsp;URL-Shortener</em></strong></li>
+    <li>Compile and build the maven project; e.g <strong><em>mvn clean install</em></strong></li>
+</ul>
+<h3>Running:</h3>
+<p>The above commands will produce a JAR file in the directory <strong><em>URL-Shortener/</em><em>target</em></strong>&nbsp;which can be simply executed using the command&nbsp;<em><strong>java -jar target/urlshortener-0.0.1-SNAPSHOT.jar&nbsp;</strong></em></p>
+<h2>Usage:</h2>
+<h3>Account Creation:</h3>
+<table style="width: 75%;">
+    <tbody>
+    <tr>
+        <td style="width: 140px"><strong>HTTP Method</strong></td>
+        <td>POST</td>
+    </tr>
+    <tr>
+        <td><strong>URI</strong></td>
+        <td>/account</td>
+    </tr>
+    <tr>
+        <td><strong>Request Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Request Body</strong></td>
+        <td>
+            <p>JSON object with the following parameters:<br />AccountId (String, mandatory)</p>
+            <p>Example: { AccountId : 'SalilS' }</p>
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Response Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Response</strong></td>
+        <td>
+            <p>On successful registration,<br />you will get JSON response with success = true, system password for the AccountId, and description message of successful registration</p>
+            <p>Example:&nbsp;</p>
+            <p>{<br /> &nbsp;&nbsp;"password":"7iNxoKLA",<br /> &nbsp;&nbsp;"success":"true",<br /> &nbsp;&nbsp;"description":"Account with id SalilS successfully created"<br /> }</p>
+            <p>On failure, you will get JSON response with success = false and error description message.</p>
+            <p>Example:</p>
+            <p>{<br /> &nbsp;&nbsp;"success":"false",<br /> &nbsp;&nbsp;"description":"Account with id SalilS already exists"<br />}</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h3>URL Registration:</h3>
+<table style="width: 75%;">
+    <tbody>
+    <tr>
+        <td style="width: 140px"><strong>HTTP Method</strong></td>
+        <td>POST</td>
+    </tr>
+    <tr>
+        <td><strong>URI</strong></td>
+        <td>/register</td>
+    </tr>
+    <tr>
+        <td><strong>Request Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Request Headers</strong></td>
+        <td>Authorization header with Basic Authencation token</td>
+    </tr>
+    <tr>
+        <td><strong>Request Body</strong></td>
+        <td>
+            <p>JSON object with the following parameters:<br />url: (String, mandatory, URL that needs shortening)<br />redirectType: 301 | 302 (not mandatory, default 302)</p>
+            <p>Example: { url : 'http://www.123stores.com' }</p>
+        </td>
+    </tr>
+    <tr>
+        <td><strong>Response Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Response</strong></td>
+        <td>
+            <p>On successful registration,<br />you will get JSON response with&nbsp;key shortUrl and value as the shortened URL</p>
+            <p>Example:&nbsp;</p>
+            <p>{<br /> &nbsp;&nbsp;"shortUrl":"baaa7"<br /> }</p>
+            <p>On failure, you will get JSON response with success = false and error description message.</p>
+            <p>Example:</p>
+            <p>{<br /> &nbsp;&nbsp;"success":"false",<br /> &nbsp;&nbsp;"description":"Url already registered"<br />}</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<h3>Account Statistics:</h3>
+<p>JSON object with the following parameters:<br />AccountId (String, mandatory)Example: { AccountId : 'SalilS' }</p>
+<table style="width: 75%;">
+    <tbody>
+    <tr>
+        <td style="width: 140px"><strong>HTTP Method</strong></td>
+        <td>GET</td>
+    </tr>
+    <tr>
+        <td><strong>URI</strong></td>
+        <td>/statistic/{AccountId}</td>
+    </tr>
+    <tr>
+        <td><strong>Request Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Request Headers</strong></td>
+        <td>Authorization header with Basic Authencation token</td>
+    </tr>
+    <tr>
+        <td><strong>Response Type</strong></td>
+        <td>application/json</td>
+    </tr>
+    <tr>
+        <td><strong>Response</strong></td>
+        <td>
+            <p>On successful registration,<br />you will get JSON response with success = true, system password for the AccountId, and description message of successful registration</p>
+            <p>Example:&nbsp;</p>
+            <p>{<br /> &nbsp;&nbsp;"password":"7iNxoKLA",<br /> &nbsp;&nbsp;"success":"true",<br /> &nbsp;&nbsp;"description":"Account with id SalilS successfully created"<br /> }</p>
+            <p>On failure, you will get JSON response with success = false and error description message.</p>
+            <p>Example:</p>
+            <p>{<br /> &nbsp;&nbsp;"success":"false",<br /> &nbsp;&nbsp;"description":"Account with id SalilS already exists"<br />}</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<h3>Redirecting:</h3>
+<p>Redirecting the client on the configured address with the configured http status.</p>
+<p>Example:</p>
+<p>On accessing a valid URL; example: http://localhost:8080/baaa7 ; the application will redirect you to registered URL</p>
+<p>On accessing an invalid URL, the application will display the application's custom 404 error page</p>
+</body>
+</html>
